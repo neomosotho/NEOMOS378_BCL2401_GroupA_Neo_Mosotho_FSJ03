@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react'
 import ProductCard from './ProductCard';
 import LoadingSpinner from './LoadingSpinner';
+import { fetchProducts } from '@/lib/api';
 
 export default function ProductGrid() {
     const [products, setProducts] = useState([]);
