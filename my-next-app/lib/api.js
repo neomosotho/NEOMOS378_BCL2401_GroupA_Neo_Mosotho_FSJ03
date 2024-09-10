@@ -4,5 +4,9 @@ export async function fetchProducts(limit = 20, skip = 0) {
   if (!response.ok) {
     throw new Error('Failed to fetch products')
   }
-  return response.json()
+  const data = await response.json()
+  return {
+    products: data.products,
+    total: data.total
+  }
 }
