@@ -18,16 +18,24 @@ export default function ProductGrid() {
     useEffect(() => {
         async function loadproducts() {
             setLoading(true)
+            setError(null)
             try {
                 const data = await fetchProducts(productsPerPage, (currentPage - 1) * productsPerPage)
-                setProducts(data.products);
-                setTotalProducts(data.products);
-                setLoading(false);
+                // console.log('Fetched data:', data)
+                if (data && Array.isArray(data)) {
+                setProducts(data);
+                setTotalProducts(data.length);
+                } else {
+                    throw new Error('Invalid data structure received from API')
+                }
                 } catch (error) {
-                    setError(error.message);
+                    console.error('Error fetching products:', error)
+                    setError(error.message || 'An error occurred while fetching products');
+                    setProducts([])
+                } finally {
                     setLoading(false);
+                }
             }
-        }
         loadproducts()
     }, [currentPage])
 
@@ -45,12 +53,19 @@ export default function ProductGrid() {
                 <ProductCard key={product.id} product={product} />
             ))}
         </div>
+        {/* {products.length > 0 ? (
+        
+        ) : (
+            <div className="text-center text-gray-500">No products found.</div>
+        )}
+        {totalProducts > productsPerPage && (
     <Pagination
         currentPage={currentPage}
         totalProducts={totalProducts}
         productsPerPage={productsPerPage}
         onPageChange={handlePageChange}
     />
+        )} */}
     </div>
     )
 }
