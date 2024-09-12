@@ -1,4 +1,4 @@
-import { fetchProductById } from '@/lib/api'
+import { fetchProductById } from '@/lib/products/api'
 
 export default async function ProductPage({ params }) {
   const product = await fetchProductById(params.id)

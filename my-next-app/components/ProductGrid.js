@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import ProductCard from './ProductCard';
 import LoadingSpinner from './LoadingSpinner';
 import Pagination from './Pagination';
-import { fetchProducts } from '@/lib/api';
+import { fetchProducts } from '@/lib/products/api';
 import { useSearchParams } from 'next/navigation';
 
 export default function ProductGrid() {
