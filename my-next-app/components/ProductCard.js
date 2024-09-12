@@ -1,7 +1,11 @@
 // components/ProductCard.js
+
+import Link from "next/link";
+
 export default function ProductCard({ product }) {
     return (
-      <div className="border rounded-lg overflow-hidden shadow-lg">
+    <Link href={`/products/${product.id}`} passHref>
+      <div className="border rounded-lg overflow-hidden shadow-lg cursor-pointer hover:shadow-lg">
         <img src={product.thumbnail} alt={product.title} className="w-full h-48 object-cover" />
         <div className="p-4">
           <h2 className="font-bold text-xl mb-2 truncate">{product.title}</h2>
@@ -9,5 +13,6 @@ export default function ProductCard({ product }) {
           <p className="text-gray-900 font-bold">${product.price.toFixed(2)}</p>
         </div>
       </div>
-    )
+    </Link>
+    );
   }

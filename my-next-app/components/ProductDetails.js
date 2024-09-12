@@ -6,7 +6,7 @@ export default async function ProductPage({ params }) {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">{product.title}</h1>
-      <img src={product.image} alt={product.title} className="w-64 h-64 object-contain mb-4" />
+      <img src={product.thumbnail} alt={product.title} className="w-64 h-64 object-contain mb-4" />
       <p className="text-gray-700">{product.description}</p>
       <p className="mt-4 text-xl font-semibold">${product.price}</p>
     </div>
