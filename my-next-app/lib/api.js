@@ -1,15 +1,12 @@
-// lib/api.js
-export async function fetchProducts(limit = 20, skip = 0) {
-  try {
-    const response = await fetch(`https://next-ecommerce-api.vercel.app/products?limit=${limit}&skip=${skip}`)
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+export async function fetchProducts(limit, offset) {
+    const res = await fetch(`https://next-ecommerce-api.vercel.app/products?limit=${limit}&offset=${offset}`);
+    if (!res.ok) {
+        throw new Error('Failed to fetch products');
     }
-    const data = await response.json()
-    console.log('API Response:', data) // Log the entire response
-    return data // Return the entire data object
-  } catch (error) {
-    console.error('Error in fetchProducts:', error)
-    throw error
-  }
+    const data = await res.json();
+    console.log(data); // Log API response
+    return {
+        products: data, // Ensure this is correct based on API structure
+        total: data || 0, // Ensure this is correct
+    };
 }

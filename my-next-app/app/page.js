@@ -1,5 +1,7 @@
 // app/page.js
-import ProductGrid from '../components/ProductGrid'
+import { fetchProducts } from '@/lib/api'
+import ProductGrid from '@/components/ProductGrid'
+import Pagination from '@/components/Pagination'
 
 export default function Home() {
   return (
