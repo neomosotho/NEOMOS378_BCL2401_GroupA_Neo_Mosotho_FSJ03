@@ -6,7 +6,7 @@ import Pagination from '@/components/Pagination'
 export default async function HomePage({searchParams}) {
   const currentPage = searchParams.page ? parseInt(searchParams.page, 10) : 1
   const productsPerPage = 20
-  const skip = (currentPage - 1) * productsPerPage
+  const skip = 0
   
   // Fetch products with skip
   const { products, total } = await fetchProducts(productsPerPage, skip)

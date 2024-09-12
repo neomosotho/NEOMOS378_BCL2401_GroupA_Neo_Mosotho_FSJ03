@@ -1,10 +1,11 @@
-'use client'
+"use client"
 
 import { useState, useEffect } from 'react'
 import ProductCard from './ProductCard';
 import LoadingSpinner from './LoadingSpinner';
 import Pagination from './Pagination';
 import { fetchProducts } from '@/lib/api';
+import { useSearchParams } from 'next/navigation';
 
 export default function ProductGrid() {
     const [products, setProducts] = useState([]);
@@ -12,30 +13,40 @@ export default function ProductGrid() {
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalProducts, setTotalProducts] = useState(0);
-    const productsPerPage = 20;
+    const productsPerPage = 20;  // Number of products to display per page
+
+    const searchParams = useSearchParams();
 
     useEffect(() => {
-        async function loadProducts() {
+        const page = parseInt(searchParams.get('page')) || 1;
+        setCurrentPage(page);
+        getProducts(page);
+    }, [searchParams]);
+
+    async function getProducts(page) {
+        try {
             setLoading(true);
-            setError(null);
-            try {
-                const { products, total } = await fetchProducts(productsPerPage, (currentPage - 1) * productsPerPage);
-                setProducts(products);
-                setTotalProducts(total); // Set total number of products
-            } catch (error) {
-                console.error('Error fetching products:', error);
-                setError(error.message || 'An error occurred while fetching products');
-                setProducts([]);
-            } finally {
-                setLoading(false);
-            }
+            const skip = (page - 1) * productsPerPage;
+            const { products, total } = await fetchProducts(productsPerPage, skip);
+            setProducts(products);
+            setTotalProducts(total);
+        } catch (error) {
+            console.error('Error fetching products:', error);
+            setError(error.message || 'An error occurred while fetching products');
+            setProducts([]);
+        } finally {
+            setLoading(false);
         }
-        loadProducts();
-    }, [currentPage]);
+    }
 
     const handlePageChange = (newPage) => {
         if (newPage >= 1 && newPage <= Math.ceil(totalProducts / productsPerPage)) {
             setCurrentPage(newPage);
+            
+            // Update URL
+            const params = new URLSearchParams(window.location.search);
+            params.set('page', newPage.toString());
+            window.history.pushState({}, '', `${window.location.pathname}?${params}`);
         }
     };
 
