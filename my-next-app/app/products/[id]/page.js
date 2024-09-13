@@ -12,7 +12,7 @@ export default async function ProductPage({ params }) {
     return <div className="text-red-500">Failed to load product details.</div>;
   }
 
-  const { title, description, category, price, images, rating, tags } = product;
+  const { title, description, category, price, images, rating, tags, stock, availability } = product;
 
   return (
     <div className="max-w-4xl mx-auto mt-8">
@@ -46,6 +46,13 @@ export default async function ProductPage({ params }) {
           </ul>
         </div>
       )}
+
+       {/* Display Stock and Availability */}
+       <div className="mt-8">
+        <h2 className="text-2xl font-semibold mb-2">Stock & Availability</h2>
+        <p className="text-lg">Stock: {stock > 0 ? `${stock} items available` : 'Out of stock'}</p>
+        <p className="text-lg">Availability: {availability ? 'In Stock' : 'Out of Stock'}</p>
+      </div>
 
       <div className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">Customer Reviews</h2>
