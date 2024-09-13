@@ -9,7 +9,7 @@ export async function fetchProductById(id) {
       return product;
     } catch (error) {
       console.error('Error fetching product:', error);
-      return null; // Return null if there’s an error
+      return null;
     }
   }
   
