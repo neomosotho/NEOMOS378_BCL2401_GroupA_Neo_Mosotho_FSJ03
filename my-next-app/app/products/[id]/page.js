@@ -12,7 +12,7 @@ export default async function ProductPage({ params }) {
     return <div className="text-red-500">Failed to load product details.</div>;
   }
 
-  const { title, description, category, price, images, rating, tags, stock, availability } = product;
+  const { title, description, category, price, images, rating, tags, stock, availability, reviews } = product;
 
   return (
     <div className="max-w-4xl mx-auto mt-8">
@@ -22,16 +22,8 @@ export default async function ProductPage({ params }) {
       <Gallery images={images} />
       <p className="text-gray-500 text-md mb-2">Category: {category}</p> {/* Display category here */}
       <p className="text-lg mt-4">{description}</p>
-      <p className="text-xl font-bold mt-4">Price: ${price.toFixed(2)}</p>
-      <div className="flex items-center mt-2">
-        {/* Display star rating */}
-        {Array.from({ length: 5 }).map((_, i) => (
-          <span key={i} className={i < rating.rate ? 'text-yellow-500' : 'text-gray-300'}>
-            ★
-          </span>
-        ))}
-        <span className="ml-2 text-gray-500">({rating.count} reviews)</span>
-      </div>
+      <p className="text-xl font-bold mt-4">Price: R{price.toFixed(2)}</p>
+      
 
       {/* Display Tags */}
       {tags && tags.length > 0 && (
@@ -54,17 +46,30 @@ export default async function ProductPage({ params }) {
         <p className="text-lg">Availability: {availability ? 'In Stock' : 'Out of Stock'}</p>
       </div>
 
+      {/* Display Customer Reviews */}
       <div className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">Customer Reviews</h2>
-        {/* Placeholder for reviews */}
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <p className="text-gray-700">"Amazing product, highly recommend!"</p>
-          <p className="text-gray-500 text-sm mt-1">- User123</p>
-        </div>
-        <div className="bg-gray-100 p-4 rounded-lg mt-4">
-          <p className="text-gray-700">"Good value for money!"</p>
-          <p className="text-gray-500 text-sm mt-1">- User456</p>
-        </div>
+        {reviews && reviews.length > 0 ? (
+          reviews.map((review, index) => (
+            <div key={index} className="bg-gray-100 p-4 rounded-lg mb-4">
+              <div className="flex items-center mb-2">
+                <span className="font-bold mr-2">{review.name}</span>
+                <span className="text-gray-500 text-sm">{new Date(review.date).toLocaleDateString()}</span>
+              </div>
+              <div className="flex items-center mb-2">
+                {/* Display star rating for review */}
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <span key={i} className={i < review.rating ? 'text-yellow-500' : 'text-gray-300'}>
+                    ★
+                  </span>
+                ))}
+              </div>
+              <p className="text-gray-700">{review.comment}</p>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-500">No reviews yet.</p>
+        )}
       </div>
     </div>
   );

@@ -51,8 +51,8 @@ export default function Gallery({ images }) {
             src={image}
             alt={`Thumbnail ${index + 1}`}
             onClick={() => setSelectedImage(index)}
-            className={`w-16 h-16 object-cover rounded-lg cursor-pointer ${
-              selectedImage === index ? 'border-2 border-blue-500' : ''
+            className={`w-16 h-16 object-contain rounded-lg cursor-pointer ${
+              selectedImage === index ? 'border-2 border-black' : ''
             }`}
           />
         ))}

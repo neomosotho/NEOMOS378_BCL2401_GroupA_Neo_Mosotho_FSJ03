@@ -32,7 +32,7 @@ export default function ProductCard({ product }) {
               <img
                 src={images[currentImageIndex]}
                 alt={product.title}
-                className="w-full h-48 object-cover"
+                className="w-full h-48 object-contain"
               />
               {/* Left Arrow */}
               <button
@@ -50,7 +50,7 @@ export default function ProductCard({ product }) {
               </button>
             </>
           ) : (
-            <img src={images[0]} alt={product.title} className="w-full h-48 object-cover" />
+            <img src={images[0]} alt={product.title} className="w-full h-48 object-contain" />
           )}
         </div>
 
@@ -58,17 +58,16 @@ export default function ProductCard({ product }) {
           <h2 className="font-bold text-xl mb-2 truncate">{title}</h2>
           <p className="text-md text-gray-500 mt-1">Category: {category}</p> {/* Display category */}
           <p className="text-gray-700 text-base mb-2 truncate">{description}</p>
-          <p className="text-gray-900 font-bold">${price.toFixed(2)}</p>
+          <p className="text-gray-900 font-bold">R{price.toFixed(2)}</p>
 
-          {/* Rating */}
-          <div className="flex items-center mt-2">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <span key={i} className={i < rating.rate ? 'text-yellow-500' : 'text-gray-300'}>
-                ★
-              </span>
-            ))}
-            <span className="ml-2 text-gray-500">({rating.count} reviews)</span>
-          </div>
+          <div className="flex items-center mb-2">
+                {/* Display star rating for review */}
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <span key={i} className={i < rating ? 'text-yellow-500' : 'text-gray-300'}>
+                    ★
+                  </span>
+                ))}
+              </div>
         </div>
       </div>
     </Link>
