@@ -20,9 +20,11 @@ export default async function ProductPage({ params }) {
 
       <h1 className="text-3xl font-semibold mb-4">{title}</h1>
       <Gallery images={images} />
+      
+      
       <p className="text-gray-500 text-md mb-2">Category: {category}</p> {/* Display category here */}
       <p className="text-lg mt-4">{description}</p>
-      <p className="text-xl font-bold mt-4">Price: R{price.toFixed(2)}</p>
+      <p className="text-xl font-bold mt-4">Price: ${price.toFixed(2)}</p>
       
 
       {/* Display Tags */}
@@ -42,8 +44,9 @@ export default async function ProductPage({ params }) {
        {/* Display Stock and Availability */}
        <div className="mt-8">
         <h2 className="text-2xl font-semibold mb-2">Stock & Availability</h2>
-        <p className="text-lg">Stock: {stock > 0 ? `${stock} items available` : 'Out of stock'}</p>
-        <p className="text-lg">Availability: {availability ? 'In Stock' : 'Out of Stock'}</p>
+        <p className="text-lg">Stock: {stock > 0 ? `${stock} items available` : 'No items available'}</p>
+        <p className="text-lg">Availability: {stock ? 'In Stock ' : 'Out of Stock'}</p>
+        <span className="`"></span>
       </div>
 
       {/* Display Customer Reviews */}

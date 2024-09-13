@@ -58,15 +58,18 @@ export default function ProductCard({ product }) {
           <h2 className="font-bold text-xl mb-2 truncate">{title}</h2>
           <p className="text-md text-gray-500 mt-1">Category: {category}</p> {/* Display category */}
           <p className="text-gray-700 text-base mb-2 truncate">{description}</p>
-          <p className="text-gray-900 font-bold">R{price.toFixed(2)}</p>
+          <p className="text-gray-900 font-bold">${price.toFixed(2)}</p>
+          
 
           <div className="flex items-center mb-2">
                 {/* Display star rating for review */}
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <span key={i} className={i < rating ? 'text-yellow-500' : 'text-gray-300'}>
+                  <span key={i} className={i < Math.round(rating) ? 'text-yellow-500' : 'text-gray-300'}>
                     ★
                   </span>
+                  
                 ))}
+                <p className="text-gray-900 font-bold">{rating.toFixed(1)}</p>
               </div>
         </div>
       </div>

@@ -20,7 +20,7 @@ export default function Gallery({ images }) {
       <img
         src={images[selectedImage]}
         alt={`Product Image ${selectedImage + 1}`}
-        className="w-full h-64 object-cover rounded-lg"
+        className="w-full h-64 object-contain rounded-lg"
       />
 
       {/* Previous Button */}
@@ -51,7 +51,7 @@ export default function Gallery({ images }) {
             src={image}
             alt={`Thumbnail ${index + 1}`}
             onClick={() => setSelectedImage(index)}
-            className={`w-16 h-16 object-contain rounded-lg cursor-pointer ${
+            className={` h-16 object-contain rounded-lg cursor-pointer ${
               selectedImage === index ? 'border-2 border-black' : ''
             }`}
           />
