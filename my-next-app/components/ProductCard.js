@@ -24,7 +24,7 @@ export default function ProductCard({ product }) {
 
   return (
     <Link href={`/products/${product.id}`} passHref>
-      <div className="border rounded-lg overflow-hidden shadow-lg cursor-pointer hover:shadow-lg">
+      <div className="border rounded-lg overflow-hidden shadow-lg cursor-pointer  hover:shadow-lg">
         {/* Image Carousel */}
         <div className="relative w-full h-48">
           {images.length > 1 ? (
