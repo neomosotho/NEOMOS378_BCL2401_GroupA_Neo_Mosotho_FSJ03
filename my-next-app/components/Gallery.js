@@ -1,8 +1,8 @@
 // components/Gallery.js
 
-'use client'; // Since we are using state and event handlers
+"use client"; // Since we are using state and event handlers
 
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function Gallery({ images }) {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -12,7 +12,9 @@ export default function Gallery({ images }) {
   };
 
   const handlePreviousImage = () => {
-    setSelectedImage((prevImage) => (prevImage === 0 ? images.length - 1 : prevImage - 1)); // Move to the previous image
+    setSelectedImage((prevImage) =>
+      prevImage === 0 ? images.length - 1 : prevImage - 1
+    ); // Move to the previous image
   };
 
   return (
@@ -52,7 +54,7 @@ export default function Gallery({ images }) {
             alt={`Thumbnail ${index + 1}`}
             onClick={() => setSelectedImage(index)}
             className={` h-16 object-contain rounded-lg cursor-pointer ${
-              selectedImage === index ? 'border-2 border-black' : ''
+              selectedImage === index ? "border-2 border-black" : ""
             }`}
           />
         ))}

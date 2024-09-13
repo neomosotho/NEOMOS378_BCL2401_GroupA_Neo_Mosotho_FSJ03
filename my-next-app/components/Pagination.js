@@ -1,17 +1,21 @@
 // components/Pagination.js
 
-'use client'
-export default function Pagination({ currentPage, totalProducts, productsPerPage }) {
-    const totalPages = Math.ceil(totalProducts / productsPerPage)
+"use client";
+export default function Pagination({
+  currentPage,
+  totalProducts,
+  productsPerPage,
+}) {
+  const totalPages = Math.ceil(totalProducts / productsPerPage);
 
-    const handlePageChange = (newPage) => {
-        const params = new URLSearchParams(window.location.search)
-        params.set('page', newPage)
-        window.location.search = params.toString()
-    }
+  const handlePageChange = (newPage) => {
+    const params = new URLSearchParams(window.location.search);
+    params.set("page", newPage);
+    window.location.search = params.toString();
+  };
 
-    return (
-        <div className="flex justify-center items-center space-x-4 mt-8">
+  return (
+    <div className="flex justify-center items-center space-x-4 mt-8">
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
@@ -19,9 +23,7 @@ export default function Pagination({ currentPage, totalProducts, productsPerPage
       >
         Previous
       </button>
-      <span>
-        Page {currentPage}
-      </span>
+      <span>Page {currentPage}</span>
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         // disabled={currentPage}
@@ -30,5 +32,5 @@ export default function Pagination({ currentPage, totalProducts, productsPerPage
         Next
       </button>
     </div>
-    )
+  );
 }
