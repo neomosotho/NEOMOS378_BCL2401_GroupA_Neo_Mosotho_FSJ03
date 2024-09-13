@@ -6,8 +6,8 @@ export async function fetchProducts(productsPerPage, skip = 0) {
       }
       const data = await res.json();
       return {
-        products: data, // Ensure this is correct based on API structure
-        total: data.total, // Ensure this is correct
+        products: data, 
+        total: data.total, 
       };
     } catch (error) {
       console.error('Error fetching products:', error);
