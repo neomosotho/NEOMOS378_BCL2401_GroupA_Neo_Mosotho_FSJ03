@@ -12,6 +12,8 @@ export default function NavBar() {
             </Link>
             <div className="ml-10 flex items-baseline space-x-4">
               <Link href="/" className="hover:bg-gray-700 px-3 py-2 rounded-md ">Home</Link>
+              <Link href="/" className="hover:bg-gray-700 px-3 py-2 rounded-md">About</Link>
+              <Link href="/" className="hover:bg-gray-700 px-3 py-2 rounded-md">Contact</Link>
             </div>
           </div>
         </div>
