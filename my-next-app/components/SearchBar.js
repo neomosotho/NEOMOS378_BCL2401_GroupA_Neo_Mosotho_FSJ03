@@ -1,16 +1,25 @@
 'use client'
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const SearchBar = () => {
-  const [query, setQuery] = useState('');
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    // Set the initial query from the URL when the component mounts
+    const initialQuery = searchParams.get('search') || '';
+    setQuery(initialQuery);
+  }, [searchParams]);
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (query.trim()) {
       router.push(`/?search=${encodeURIComponent(query.trim())}`);
+    } else {
+      router.push('/'); // If the search is empty, go to the home page without query
     }
   };
 

@@ -1,25 +1,51 @@
-"use client";
+'use client'
 
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import LoadingSpinner from "./LoadingSpinner";
 import Pagination from "./Pagination";
 import { fetchProducts } from "@/lib/products/api";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
-export default function ProductGrid({ products: initialProducts, totalProducts }) {
-  const [products, setProducts] = useState(initialProducts);
-  const [loading, setLoading] = useState(false);
+export default function ProductGrid({ initialPage, searchQuery }) {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const [totalProducts, setTotalProducts] = useState(0);
   const productsPerPage = 20;
-
-  const searchParams = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
-    const page = parseInt(searchParams.get("page")) || 1;
-    setCurrentPage(page);
-  }, [searchParams]);
+    const getProducts = async () => {
+      try {
+        setLoading(true);
+        const skip = (currentPage - 1) * productsPerPage;
+        const { products, total } = await fetchProducts(productsPerPage, skip, searchQuery);
+        setProducts(products);
+        setTotalProducts(total);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setError(error.message || "An error occurred while fetching products");
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getProducts();
+  }, [currentPage, searchQuery]);
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= Math.ceil(totalProducts / productsPerPage)) {
+      setCurrentPage(newPage);
+      const params = new URLSearchParams({ page: newPage.toString() });
+      if (searchQuery) {
+        params.append('search', searchQuery);
+      }
+      router.push(`/?${params.toString()}`);
+    }
+  };
 
   if (loading) return <LoadingSpinner />;
   if (error) return <div className="text-red-500">Error: {error}</div>;
@@ -40,6 +66,7 @@ export default function ProductGrid({ products: initialProducts, totalProducts }
           currentPage={currentPage}
           totalProducts={totalProducts}
           productsPerPage={productsPerPage}
+          onPageChange={handlePageChange}
         />
       )}
     </div>

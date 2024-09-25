@@ -5,6 +5,7 @@ export default function Pagination({
   currentPage,
   totalProducts,
   productsPerPage,
+  onPageChange
 }) {
   const totalPages = Math.ceil(totalProducts / productsPerPage);
 
@@ -17,7 +18,7 @@ export default function Pagination({
   return (
     <div className="flex justify-center items-center space-x-4 mt-8">
       <button
-        onClick={() => handlePageChange(currentPage - 1)}
+        onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className="px-4 py-2 bg-black hover:bg-gray-700 text-white rounded disabled:bg-gray-300"
       >
@@ -25,7 +26,7 @@ export default function Pagination({
       </button>
       <span>Page {currentPage}</span>
       <button
-        onClick={() => handlePageChange(currentPage + 1)}
+        onClick={() => onPageChange(currentPage + 1)}
         // disabled={currentPage}
         className="px-4 py-2 bg-black hover:bg-gray-700 text-white rounded disabled:bg-gray-300"
       >
