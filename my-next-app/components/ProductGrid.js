@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
@@ -6,8 +6,9 @@ import LoadingSpinner from "./LoadingSpinner";
 import Pagination from "./Pagination";
 import { fetchProducts } from "@/lib/products/api";
 import { useRouter } from 'next/navigation';
+import CategoriesFilter from "./CategoriesFilter";
 
-export default function ProductGrid({ initialPage, searchQuery }) {
+export default function ProductGrid({ initialPage, searchQuery, selectedCategory }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,7 +22,7 @@ export default function ProductGrid({ initialPage, searchQuery }) {
       try {
         setLoading(true);
         const skip = (currentPage - 1) * productsPerPage;
-        const { products, total } = await fetchProducts(productsPerPage, skip, searchQuery);
+        const { products, total } = await fetchProducts(productsPerPage, skip, searchQuery, selectedCategory); // Pass selectedCategory
         setProducts(products);
         setTotalProducts(total);
       } catch (error) {
@@ -34,7 +35,7 @@ export default function ProductGrid({ initialPage, searchQuery }) {
     };
 
     getProducts();
-  }, [currentPage, searchQuery]);
+  }, [currentPage, searchQuery, selectedCategory]); // Add selectedCategory to dependencies
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= Math.ceil(totalProducts / productsPerPage)) {
@@ -42,6 +43,9 @@ export default function ProductGrid({ initialPage, searchQuery }) {
       const params = new URLSearchParams({ page: newPage.toString() });
       if (searchQuery) {
         params.append('search', searchQuery);
+      }
+      if (selectedCategory) { // Add selectedCategory to URL parameters
+        params.append('category', selectedCategory);
       }
       router.push(`/?${params.toString()}`);
     }

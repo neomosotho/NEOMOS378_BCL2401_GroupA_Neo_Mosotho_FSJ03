@@ -1,3 +1,4 @@
+// components/SearchBar.js
 'use client'
 
 import React, { useState, useEffect } from 'react';
@@ -9,7 +10,6 @@ const SearchBar = () => {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
-    // Set the initial query from the URL when the component mounts
     const initialQuery = searchParams.get('search') || '';
     setQuery(initialQuery);
   }, [searchParams]);
@@ -19,7 +19,7 @@ const SearchBar = () => {
     if (query.trim()) {
       router.push(`/?search=${encodeURIComponent(query.trim())}`);
     } else {
-      router.push('/'); // If the search is empty, go to the home page without query
+      router.push('/'); // Go to home page if search is empty
     }
   };
 
@@ -31,11 +31,11 @@ const SearchBar = () => {
           placeholder="Search products..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-black"
         />
         <button 
           type="submit" 
-          className="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-4 py-2 bg-black text-white rounded-r-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black"
         >
           Search
         </button>
