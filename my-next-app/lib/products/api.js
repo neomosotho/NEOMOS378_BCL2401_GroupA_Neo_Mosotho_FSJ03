@@ -1,6 +1,6 @@
 // lib/products/api.js
 
-export async function fetchProducts(limit = 20, skip = 0, searchQuery = '', categoryFilter = '') {
+export async function fetchProducts(limit = 20, skip = 0, searchQuery = '', categoryFilter = '', sortOrder = '') {
   try {
     let url = `https://dummyjson.com/products?limit=${limit}&skip=${skip}`;
 
@@ -9,6 +9,11 @@ export async function fetchProducts(limit = 20, skip = 0, searchQuery = '', cate
       url = `https://dummyjson.com/products/search?q=${encodeURIComponent(searchQuery)}&limit=${limit}&skip=${skip}`;
     } else if (categoryFilter) {
       url = `https://dummyjson.com/products/category/${encodeURIComponent(categoryFilter)}?limit=${limit}&skip=${skip}`;
+    }
+
+    // Apply sorting (if provided)
+    if (sortOrder === 'asc' || sortOrder === 'desc') {
+      url += `&sort=price&order=${sortOrder}`;
     }
 
     const response = await fetch(url);

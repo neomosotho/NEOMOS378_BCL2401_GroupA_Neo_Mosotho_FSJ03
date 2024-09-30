@@ -4,6 +4,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import Gallery from "@/components/Gallery";
 import BackButton from "@/components/BackButton";
 
+
 export default async function ProductPage({ params }) {
   const { id } = params;
   const product = await fetchProductById(id);

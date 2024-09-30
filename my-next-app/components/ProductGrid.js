@@ -6,9 +6,9 @@ import LoadingSpinner from "./LoadingSpinner";
 import Pagination from "./Pagination";
 import { fetchProducts } from "@/lib/products/api";
 import { useRouter } from 'next/navigation';
-import CategoriesFilter from "./CategoriesFilter";
+import CombinedFilterSort from "./CombinedFilterSort";
 
-export default function ProductGrid({ initialPage, searchQuery, selectedCategory }) {
+export default function ProductGrid({ initialPage, searchQuery, selectedCategory, sortOrder }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,7 +22,7 @@ export default function ProductGrid({ initialPage, searchQuery, selectedCategory
       try {
         setLoading(true);
         const skip = (currentPage - 1) * productsPerPage;
-        const { products, total } = await fetchProducts(productsPerPage, skip, searchQuery, selectedCategory); // Pass selectedCategory
+        const { products, total } = await fetchProducts(productsPerPage, skip, searchQuery, selectedCategory, sortOrder); // Pass selectedCategory
         setProducts(products);
         setTotalProducts(total);
       } catch (error) {
@@ -35,7 +35,7 @@ export default function ProductGrid({ initialPage, searchQuery, selectedCategory
     };
 
     getProducts();
-  }, [currentPage, searchQuery, selectedCategory]); // Add selectedCategory to dependencies
+  }, [currentPage, searchQuery, selectedCategory, sortOrder]); // Add selectedCategory to dependencies
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= Math.ceil(totalProducts / productsPerPage)) {
@@ -46,6 +46,9 @@ export default function ProductGrid({ initialPage, searchQuery, selectedCategory
       }
       if (selectedCategory) { // Add selectedCategory to URL parameters
         params.append('category', selectedCategory);
+      }
+      if (sortOrder) {
+        params.append('sort', sortOrder);
       }
       router.push(`/?${params.toString()}`);
     }
